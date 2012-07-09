@@ -1,4 +1,1 @@
-HCC-Interns
-===========
-
-Hartnell/UCSC Interns
+Used for code developed in Summer 2012
