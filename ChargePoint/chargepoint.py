@@ -21,7 +21,6 @@ class StationInformation(ChargePointAPIAccount):
     def __init__(self, key, pw):
         url='https://webservices.chargepointportal.net:8081/coulomb_api_1.1.wsdl'
         ChargePointAPIAccount.__init__(self,key,pw,url)
-        self.connect()
     
     def getUSStationInformation(self, Name=None, Address=None, City=None, State=None, PostalCode=None, Lat=None, Long=None, ProximityUnit='M'):
         pass
@@ -34,7 +33,7 @@ if __name__ == "__main__":
         Config = ConfigParser.ConfigParser()
         Config.read('./hcc.conf')
         key=Config.get('Account', 'key')
-        pw=Config.get('Account', 'pw')
+        pw=Config.get('Account', 'password')
 #        url=Config.get('Account', 'url')
     except:
         print "Exception parsing config file"
