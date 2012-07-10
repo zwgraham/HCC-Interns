@@ -1,5 +1,5 @@
 *.py[co]
-
+hcc.conf
 # Packages
 *.egg
 *.egg-info
