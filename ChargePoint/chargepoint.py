@@ -18,12 +18,17 @@ class StationInformation(ChargePointAPIAccount):
     '''
     Access the ChargePoint Network Station Information API
     '''
-    def __init__(self, key, pw):
-        url='https://webservices.chargepointportal.net:8081/coulomb_api_1.1.wsdl'
+    def __init__(   self, key, pw, 
+                    url='https://webservices.chargepointportal.net:8081/coulomb_api_1.1.wsdl'):
         ChargePointAPIAccount.__init__(self,key,pw,url)
-    
-    def getUSStationInformation(self, Name=None, Address=None, City=None, State=None, PostalCode=None, Lat=None, Long=None, ProximityUnit='M'):
-        pass
+
+    def SearchByZipCode(self, ZipCode=93906, Proximity=5, ProximityUnit='M'):
+        searchRequest = self.client.factory.create('stationSearchRequest')
+        searchRequest.postalCode=ZipCode
+        searchRequest.Proximity=Proximity
+        searchRequest.proximityUnit=ProximityUnit
+        response=self.client.service.getAllUSStations(searchRequest)
+        return response
 
 
 
@@ -39,3 +44,4 @@ if __name__ == "__main__":
         print "Exception parsing config file"
 
     s=StationInformation(key,pw)
+    print s.SearchByZipCode(94102, 0.25)
