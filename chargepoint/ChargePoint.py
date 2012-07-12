@@ -18,7 +18,7 @@ class StationInformation(ChargePointAPIAccount):
     '''
     Access the ChargePoint Network Station Information API
     '''
-    def __init__(   self, key, pw, 
+    def __init__(   self, key, pw,
                     url='https://webservices.chargepointportal.net:8081/coulomb_api_1.1.wsdl'):
         ChargePointAPIAccount.__init__(self,key,pw,url)
 
@@ -37,6 +37,21 @@ class StationInformation(ChargePointAPIAccount):
 
         return stationsInZipCode
 
+    def SearchByGeo(self, Latitude='36.673192', Longitude = '-121.605089', Proximity=20, ProximityUnit='M'):
+        searchRequest = self.client.factory.create('stationSearchRequest')
+        searchRequest.Geo.lat=Latitude
+        searchRequest.Geo.long=Longitude
+        searchRequest.Proximity=Proximity
+        searchRequest.proximityUnit=ProximityUnit
+        reply=self.client.service.getAllUSStations(searchRequest)
+        #needs error checking by response code
+
+        stationsByGeo=[]
+        for station in reply:
+            
+            stationsByGeo.append(station)
+
+        return stationsByGeo
 
 
 if __name__ == "__main__":
@@ -46,12 +61,13 @@ if __name__ == "__main__":
         Config.read('./hcc.conf')
         key=Config.get('Account', 'key')
         pw=Config.get('Account', 'password')
-#        url=Config.get('Account', 'url')
+        url=Config.get('Account', 'url')
     except:
         print "Exception parsing config file"
 
     s=StationInformation(key,pw)
+<<<<<<< HEAD
     print '*******'
     for l in s.SearchByZipCode('93907', '10'):
         print l.postalCode
-        print '*******'
+       print '*******'
