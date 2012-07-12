@@ -52,6 +52,6 @@ if __name__ == "__main__":
 
     s=StationInformation(key,pw)
     print '*******'
-    for l in s.SearchByZipCode('94102'):
+    for l in s.SearchByZipCode('93907', '10'):
         print l.postalCode
         print '*******'
