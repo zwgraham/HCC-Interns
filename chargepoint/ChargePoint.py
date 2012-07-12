@@ -22,7 +22,7 @@ class StationInformation(ChargePointAPIAccount):
                     url='https://webservices.chargepointportal.net:8081/coulomb_api_1.1.wsdl'):
         ChargePointAPIAccount.__init__(self,key,pw,url)
 
-    def SearchByZipCode(self, ZipCode='93906', Proximity=1.5, ProximityUnit='M'):
+    def SearchByZipCode(self, ZipCode='93906', Proximity=15, ProximityUnit='M'):
         searchRequest = self.client.factory.create('stationSearchRequest')
         searchRequest.postalCode=ZipCode
         searchRequest.Proximity=Proximity
@@ -52,6 +52,21 @@ class StationInformation(ChargePointAPIAccount):
             stationsByGeo.append(station)
 
         return stationsByGeo
+    
+    def searchByAddress(self, Address='1743 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
+        searchRequest = self.client.factory.create('stationSearchRequest')
+        searchRequest.Address = Address
+        searchRequest.City= City
+        searchRequest.State = State
+        searchRequest.Proximity=Proximity
+        searchRequest.proximityUnit=ProximityUnit
+        reply=self.client.service.getAllUSStations(searchRequest)
+        
+        stationByAddress = []
+        for station in reply.stationData:
+            #print station.Address
+            stationByAddress.append(station)
+        return stationByAddress
 
 
 if __name__ == "__main__":
@@ -66,8 +81,7 @@ if __name__ == "__main__":
         print "Exception parsing config file"
 
     s=StationInformation(key,pw)
-<<<<<<< HEAD
     print '*******'
     for l in s.SearchByZipCode('93907', '10'):
         print l.postalCode
-       print '*******'
+        print '*******'
