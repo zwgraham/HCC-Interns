@@ -53,7 +53,7 @@ class StationInformation(ChargePointAPIAccount):
 
         return stationsByGeo
     
-    def searchByAddress(self, Address='1743 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
+    def searchByAddress(self, Address='1752 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
         searchRequest = self.client.factory.create('stationSearchRequest')
         searchRequest.Address = Address
         searchRequest.City= City
@@ -85,3 +85,5 @@ if __name__ == "__main__":
     for l in s.SearchByZipCode('93907', '10'):
         print l.postalCode
         print '*******'
+
+    
