@@ -1,5 +1,7 @@
 *.py[co]
 hcc.conf
+*.csv
+*.wnd
 # Packages
 *.egg
 *.egg-info
