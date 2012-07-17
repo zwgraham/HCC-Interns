@@ -14,12 +14,13 @@ def str2date(x):
 def str2time(x):
     return datetime.time(int(x)/100, int(x)%100)
 
+
+starttime=datetime.datetime(2012,01,01,00,00)
+
 INPUT=sys.argv[1]+'.csv'
 OUTPUT=sys.argv[1]+'.wnd'
-firstrow=True
-starttime=datetime.datetime(2012,01,01,00,00)
-#INPUT='201201wind.csv'
-#OUTPUT='pocessed.wnd'
+#INPUT='01jan2012.csv'
+#OUTPUT='jan.wnd'
 f=file(INPUT,'r')
 infile=csv.reader(f)
 headers=infile.next()
@@ -28,6 +29,8 @@ outfile=file(OUTPUT,'w')
 D=headers.index('Date')
 T=headers.index('Time')
 W=headers.index('WindSpeed')
+
+outfile=file(OUTPUT,'w')
 
 temp_array=[]
 working_datetime=starttime
@@ -52,12 +55,11 @@ for row in infile:
             averageWindspeed=0.0
         else:
             averageWindspeed=sum(temp_array)/float(len(temp_array))
-            
-        sys.stdout.write(str(working_datetime)+'\t%.2f\t%d\n'%(averageWindspeed, len(temp_array)))
         ##convert to m/s
         averageWindspeed*=0.44704 #mph to m/s
+        sys.stdout.write(str(working_datetime)+'\t%.2f\t%d\n'%(averageWindspeed, len(temp_array)))
         ##write to file
-        outfile.write('%.4f\r\n'%(averageWindspeed))
+        outfile.write('%.4f\n'%(averageWindspeed))
         ##reset variables
         working_datetime=working_datetime+reltime
         temp_array=[]
@@ -70,6 +72,9 @@ for row in infile:
         print 'ERROR'
         print row
         break
+
+outfile.close()
+f.close()
         
 
 
