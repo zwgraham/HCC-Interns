@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#/usr/bin/env python
 from suds.client import Client
 from suds.wsse import Security, UsernameToken
 import logging
@@ -60,7 +60,7 @@ class StationInformation(ChargePointAPIAccount):
         return stationsByGeo
     
     def searchByAddress(self, Address='1743 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
-    self.logger.info('Searching by address:  %s, %s %s'%(Address,City,State))
+    	self.logger.info('Searching by address:  %s, %s %s'%(Address,City,State))
         searchRequest = self.client.factory.create('stationSearchRequest')
         searchRequest.Address = Address
         searchRequest.City= City
@@ -84,7 +84,7 @@ if __name__ == "__main__":
         Config = ConfigParser.ConfigParser()
         Config.read('./hcc.conf')
     except:
-    print "Exception reading config file"
+    	print "Exception reading config file"
     try:
         key=Config.get('Account', 'key')
         pw=Config.get('Account', 'password')
