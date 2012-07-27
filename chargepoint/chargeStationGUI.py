@@ -14,25 +14,32 @@ class ChargeStationFind(wx.Frame):
 		self.InitUI()
 
 	def InitUI(self):
-		toolbar = self.CreateToolBar()
-		exitpng = wx.Bitmap('texit.png')
-		exitpng.SetSize((10,10))
-		qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
-		toolbar.Realize()
-		self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
+		#toolbar = self.CreateToolBar()
+		#exitpng = wx.Bitmap('texit.png')
+		#exitpng.SetSize((10,10))
+		#qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
+		#toolbar.Realize()
+		#self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
 
-		panel = wx.Panel(self, -1)
-		menubar = wx.MenuBar()
-		filem = wx.Menu()
-		editm = wx.Menu()
-		helpm = wx.Menu()
+		panel = wx.Panel(self)
 
-		menubar.Append(filem, '&File')
-		menubar.Append(editm, '&Edit')
-		menubar.Append(helpm, '&Help')
-		self.SetMenuBar(menubar)
+		hbox = wx.BoxSizer(wx.HORIZONTAL)
 
-		wx.TextCtrl(self)
+		fgs = wx.FlexGridSizer(3,2,9,25)
+		
+		addressTxt = wx.StaticText(panel, label="Address")
+		zipCodeTxt = wx.StaticText(panel, label="Zip Code")
+
+		textbox1 = wx.TextCtrl(panel)
+		textbox2 = wx.TextCtrl(panel)
+
+		fgs.AddMany([(addressTxt), (textbox1, 1, wx.EXPAND), (zipCodeTxt), (textbox2, 1, wx.EXPAND)])
+
+		fgs.AddGrowableRow(2,1)
+		fgs.AddGrowableCol(1,1)
+
+		hbox.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=15)
+		panel.SetSizer(hbox)
 
 		self.Centre()
 		self.Show(True)
