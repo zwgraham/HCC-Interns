@@ -8,19 +8,33 @@ import wx
 import ChargePoint
 
 class ChargeStationFind(wx.Frame):
-	def __init__(self, *args, **kwargs):
-		super(ChargeStationFind, self).__init__(*args, **kwargs)
+
+	def __init__(self, parent, title):
+		super(ChargeStationFind, self).__init__(parent, title=title, size = (260,180))
 		self.InitUI()
 
 	def InitUI(self):
 		toolbar = self.CreateToolBar()
 		exitpng = wx.Bitmap('texit.png')
-		exitpng.SetSize((20,20))
+		exitpng.SetSize((10,10))
 		qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
 		toolbar.Realize()
 		self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
-		self.SetSize((500,250))
-		self.SetTitle('Charge Station Finder')
+
+		panel = wx.Panel(self, -1)
+		menubar = wx.MenuBar()
+		filem = wx.Menu()
+		editm = wx.Menu()
+		helpm = wx.Menu()
+
+		menubar.Append(filem, '&File')
+		menubar.Append(editm, '&Edit')
+		menubar.Append(helpm, '&Help')
+		self.SetMenuBar(menubar)
+
+		wx.TextCtrl(self)
+
+		self.Centre()
 		self.Show(True)
 		
 
@@ -29,7 +43,7 @@ class ChargeStationFind(wx.Frame):
 
 def main():
 	ex = wx.App()
-	ChargeStationFind(None)
+	ChargeStationFind(None, title='Charge Station Finder')
 	ex.MainLoop()
 
 if __name__ == '__main__':
