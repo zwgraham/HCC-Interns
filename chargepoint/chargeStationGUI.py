@@ -16,7 +16,7 @@ class ChargeStationFind(wx.Frame):
 	def InitUI(self):
 		toolbar = self.CreateToolBar()
 		exitpng = wx.Bitmap('texit.png')
-		exitpng.SetSize((10,10))
+		exitpng.SetSize((1,1))
 		qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
 		toolbar.Realize()
 		self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
