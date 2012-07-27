@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#/usr/bin/env python
 from suds.client import Client
 from suds.wsse import Security, UsernameToken
 import logging
