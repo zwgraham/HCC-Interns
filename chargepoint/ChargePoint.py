@@ -59,7 +59,7 @@ class StationInformation(ChargePointAPIAccount):
         self.logger.info('API Returned %d results'%(len(stationsByGeo)))
         return stationsByGeo
     
-    def searchByAddress(self, Address='1743 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
+    def SearchByAddress(self, Address='1743 East Alisal St', City='Salinas', State='CA', Proximity=15, ProximityUnit='M'):
     	self.logger.info('Searching by address:  %s, %s %s'%(Address,City,State))
         searchRequest = self.client.factory.create('stationSearchRequest')
         searchRequest.Address = Address

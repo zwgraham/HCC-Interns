@@ -8,27 +8,62 @@
 import wx
 import logging
 import ChargePoint
-
-class ChargeStationFind(wx.Frame):
+class ChargePointLocator(wx.App):
     '''
-    Custom Frame for the App
+    wxPython interface to the ChargePoint netowrks location services api
     '''
-    def __init__(self, *args, **kwargs):
-        wx.Frame.__init__(self, *args, **kwargs)
-        self.logger=logging.getLogger('ChargeStationFrame')
-        self.InitUI()
+    def __init__(self,key,pw, *args, **kwargs):
+        wx.App.__init__(self,*args, **kwargs)
+        self.key=key
+        self.pw=pw
 
-    def InitUI(self):
+    def OnInit(self):
+        frame=StationSearch(key,pw,parent=None)
+        self.SetTopWindow=frame
+        frame.Show()
+        return 1
+
+class SearchParameters(wx.Panel):
+    '''
+    panel containing search options
+    '''
+    def __init__(self,parent,*args,**kwargs):
+        wx.Panel.__init__(self,*args,**kwargs)
+
+
+class SearchResults(wx.Panel):
+    '''
+    panel for search results
+    '''
+    def __init__(self,parent,*args,**kwargs):
+        wx.Panel.__init__(self,*args,**kwargs)
+
+
+class Buttons(wx.Panel):
+    '''
+    panel for the control buttons
+    '''
+    def __init__(self,parent,*args,**kwargs):
+        wx.Panel.__init__(self,*args,**kwargs)
+
+
+class StationSearch(wx.Frame):
+    '''
+    window for searching for chargers
+    '''
+    def __init__(self, parent,key,pw, *args, **kwargs):
+        wx.Frame.__init__(self, parent, title="ChargePoint Locator", size=(400,400), *args, **kwargs)
+        self.parent=parent
+        self.logger=logging.getLogger('ChargePointLocator')
         self.logger.debug('Building UI')
-        toolbar = self.CreateToolBar()
-        exitpng = wx.Bitmap('texit.png')
-        exitpng.SetSize((10,10))
-        qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
-        toolbar.Realize()
-        self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
-        self.SetSize((500,250))
-        self.SetTitle('Charge Station Finder')
-        self.Show(True)
+        MenuBar  = wx.MenuBar()
+        FileMenu = wx.Menu()
+        item = FileMenu.Append(wx.ID_EXIT, text='&Quit')
+        self.Bind(wx.EVT_MENU, self.OnQuit, item)
+        MenuBar.Append(FileMenu, "&File")
+        self.SetMenuBar(MenuBar)
+
+        self.StationInformation= ChargePoint.StationInformation(key,pw)
         
 
     def OnQuit(self, e):
@@ -51,9 +86,7 @@ if __name__ == '__main__':
         print "Exception parsing config file"
         exit()
                                                                                                 
-
-    ex = wx.App()
-    ChargeStationFind(None)
-    ex.MainLoop()
+    c=ChargePointLocator(0, key,pw)
+    c.MainLoop()
 
 
